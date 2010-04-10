@@ -11,7 +11,7 @@
 class AuditTask extends sfBaseTask
 {
   protected
-    $patternConfigs = null;
+  $patternConfigs = null;
 
   public static function globToPattern($glob)
   {
@@ -74,7 +74,9 @@ class AuditTask extends sfBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('path', sfCommandArgument::OPTIONAL, 'Filesystem path to the file or directory to audit', sfConfig::get('sf_root_dir'))));
+    new sfCommandArgument('path', sfCommandArgument::OPTIONAL, 'Filesystem path to the file or directory to audit', sfConfig::get('sf_root_dir')),
+    new sfCommandArgument('format', sfCommandArgument::OPTIONAL, 'Output format', '')
+    ));
 
     $this->name = '';
     $this->briefDescription = 'FIXME';
@@ -199,7 +201,7 @@ EOF;
 
     $phpcs = new PHP_CodeSniffer;
 
-    $finder = new SvnFinder;
+    $finder = new sfFinder;
     foreach ($finder->in($arguments['path']) as $path)
     {
       $config = $this->getConfigForPath($path);
@@ -229,37 +231,31 @@ EOF;
         $phpcsFile = new PHP_CodeSniffer_File($path, array(), $phpcs->allowedFileExtensions);
       }
 
-      if (isset($config['preamble']))
-      {
-      }
 
-      if (isset($config['props']))
-      {
-        $props = $this->getPropsFromPath($path);
-        foreach ($props + $config['props'] as $key => $value)
-        {
-          if (isset($props[$key]) && !isset($config['props'][$key]))
-          {
-            $phpcsFile->addError('SVN property "'.$key.'" = "'.$props[$key].'" found but not expected', 0);
-            continue;
-          }
-
-          if (!isset($props[$key]) && isset($config['props'][$key]))
-          {
-            $phpcsFile->addError('SVN property "'.$key.'" = "'.$config['props'][$key].'" expected but not found', 0);
-            continue;
-          }
-
-          if ($props[$key] != $config['props'][$key])
-          {
-            $phpcsFile->addError('SVN property "'.$key.'" = "'.$props[$key].'" expected to match "'.$config['props'][$key].'"', 0);
-          }
-        }
-      }
 
       $phpcs->addFile($phpcsFile);
     }
 
-    $phpcs->printErrorReport();
+    switch ($arguments['format'])
+    {
+      case 'emacs':
+        $phpcs->printEmacsErrorReport();
+        break;
+      case 'csv':
+        $phpcs->printCSVErrorReport();
+        break;
+      case 'xml':
+        $phpcs->printXMLErrorReport();
+        break;
+      case 'checkstyle':
+        $phpcs->printCheckstyleErrorReport();
+        break;
+      case '':
+      default:
+        $phpcs->printErrorReport();
+        break;
+    }
+
+
   }
 }

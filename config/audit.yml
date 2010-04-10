@@ -20,14 +20,9 @@
 
 //*.php:
   preamble:
-  props:
-    'svn:keywords': Author Id Revision
-    'svn:eol-style': native
 
 //*.png:
   code:
-  props:
-    'svn:mime-type': image/png
 
 //*.swf:
   code:
@@ -64,7 +59,6 @@ lib/model/om//*:
 
 lib/vendor//*:
   code:
-  props:
 
 lib/xhtml-to-xslfo.xsl:
   code:
@@ -77,11 +71,9 @@ plugins/*/package.xml:
 
 plugins/sfAuditPlugin/lib/vendor//*:
   code:
-  props:
 
 plugins/sfThumbnailPlugin//*:
   code:
-  props:
 
 test/selenium//*:
   code:
