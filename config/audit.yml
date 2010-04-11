@@ -57,6 +57,24 @@ lib/model/map//*:
 lib/model/om//*:
   code:
 
+lib/model/doctrine/base//*:
+  code:
+
+lib/model/doctrine/*/base//*:
+  code:
+
+lib/form/doctrine/base//*:
+  code:
+
+lib/form/doctrine/*/base//*:
+  code:
+  
+lib/filter/doctrine/base//*:
+  code:
+
+lib/filter/doctrine/*/base//*:
+  code:
+
 lib/vendor//*:
   code:
 
