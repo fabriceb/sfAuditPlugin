@@ -51,11 +51,28 @@ config/package.xml:
 lib/GoogleMapAPI//*:
   code:
 
+
+
 lib/model/map//*:
   code:
 
 lib/model/om//*:
   code:
+
+/lib/*/base//*:
+  code:
+
+/plugins/*Plugin/lib/*/base//*:
+  code:
+
+/plugins/*Plugin/lib/model/map//*:
+  code:
+
+/plugins/*Plugin/lib/model/om//*:
+  code:
+
+
+
 
 lib/model/doctrine/base//*:
   code:
@@ -74,6 +91,15 @@ lib/filter/doctrine/base//*:
 
 lib/filter/doctrine/*/base//*:
   code:
+
+
+
+
+
+
+
+
+
 
 lib/vendor//*:
   code:
